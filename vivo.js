@@ -8,7 +8,8 @@ const avgBlockTime = 2 // 2mins
 
 const url = `http://vivo.explorerz.top:3003/ext/masternodes?_=${Date.now()}`
 
-axios.get(url)
+function runRequest() {
+  axios.get(url)
   .then(data => {
     const nodes = data.data.data
     const activeNodes = _.filter(nodes, { 'status': 'ENABLED' })
@@ -32,3 +33,9 @@ axios.get(url)
     }
   })
   .catch(err => console.log(err))
+  setTimeout(() => {
+    runRequest()
+  }, 120000)
+}
+
+runRequest()
