@@ -1,0 +1,16 @@
+{
+  "name": "vivo",
+  "version": "0.1.0",
+  "description": "",
+  "main": "vivo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "valmassoi",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.17.0",
+    "colors": "^1.1.2",
+    "lodash": "^4.17.4"
+  }
+}
