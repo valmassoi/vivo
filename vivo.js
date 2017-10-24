@@ -36,7 +36,7 @@ function runRequest() {
       Rank: ${rank}
       ${percent_change_24h}% 24hr`))
     axios.get(masterNodeUrl)
-    .then(data => {
+    .then(data => { // TODO async
       const nodes = data.data.data
       const activeNodes = _.filter(nodes, { 'status': 'ENABLED' })
       console.log(colors.blue(`Active Nodes: ${masternodeOnlineCount} of Total: ${masternodeCount}`))
