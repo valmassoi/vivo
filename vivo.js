@@ -11,6 +11,18 @@ const masterNodeUrl = `http://vivo.explorerz.top:3003/ext/masternodes?_=${Date.n
 
 const numberWithCommas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
+function getDayAppend(day) {
+  let dayAppend = 'th'
+  if (day.endsWith(1)) {
+    dayAppend = 'st'
+  } else if (day.endsWith(2)) {
+    dayAppend = 'nd'
+  } else if (day.endsWith(3)) {
+    dayAppend = 'rd'
+  }
+  return dayAppend
+}
+
 function runRequest() {
   axios.get(summaryUrl)
   .then(sum => {
@@ -55,7 +67,13 @@ function runRequest() {
         **excludes neverpaid - new MNs`)
         const lowerBound = avgBlockTime * (myNodeIndex - neverPaid)
         const upperBound = avgBlockTime * myNodeIndex
+        const centerPoint = (lowerBound + upperBound) / 2
+        const centerPointMs = centerPoint * 60000
+        const estTime = new Date(Date.now() + centerPointMs)
+        const dayAppend = getDayAppend(estTime.getDate().toString())
+        const dateString = `${estTime.getHours()}:${estTime.getMinutes()} on the ${estTime.getDate()}${dayAppend}`
         console.log(`Payout in ~${lowerBound} - ${upperBound} mins (${(lowerBound / 60).toFixed(2)} - ${(upperBound / 60).toFixed(2)} hrs)`)
+        console.log(colors.green(`Est. around: ${dateString}`))
       }
     })
     .catch(err => console.log(err))
