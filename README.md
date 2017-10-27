@@ -2,7 +2,7 @@
 ## Install and Run
 ```bash
 npm install # get dependencies
-MY_IP=xx.xx.xxx.xx node vivo.js # run app
+MNS=xx.xx.xxx.xx,zz.zz.zzz.zz node vivo.js # run app
 ```
 ## Example Response
 ![summary](https://raw.githubusercontent.com/valmassoi/vivo/master/summary.png)
