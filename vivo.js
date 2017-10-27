@@ -60,7 +60,7 @@ function runRequest() {
         console.log('My Node:', myNode)
         const myNodeIndex = _.indexOf(sortedActiveNodes, myNode)
         if (myNode.status !== 'ENABLED') {
-          console.log(colors.red('MY MASTERNODE IS DOWN!'))
+          console.log(colors.red(`MY MASTERNODE ${node} IS DOWN!`))
         } else {
           const neverPaid = _.filter(sortedActiveNodes, { 'lastpaid': '0' }).length
           console.log(colors.green(`Reward queue: ${masternodeOnlineCount - myNodeIndex}* of (${masternodeOnlineCount - neverPaid}**)${masternodeOnlineCount}`),
