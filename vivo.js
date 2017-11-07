@@ -1,6 +1,7 @@
 const _ = require('lodash')
 const axios = require('axios')
 const colors = require('colors')
+const figlet = require('figlet')
 
 const mns = process.env.MNS || ''
 const masterNodes = [...mns.split(',')]
@@ -87,4 +88,12 @@ function runRequest() {
   }, 120000)
 }
 
-runRequest()
+figlet('VIVO', {font: 'Lean'}, (err, data) => {
+  if (err) {
+    console.log('Something went wrong...')
+    console.dir(err)
+    return
+  }
+  console.log(data)
+  runRequest()
+})
