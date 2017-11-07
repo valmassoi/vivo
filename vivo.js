@@ -68,8 +68,8 @@ function runRequest() {
           const balanceValueIndex = html.indexOf('</td><td>', totalSentValueIndex + '</td><td>'.length)
           const balanceValue = html.substr(balanceValueIndex + '</td><td>'.length, 30)
           const balanceValueSplit = balanceValue.split('</td>')[0]
-          console.log(colors.magenta(`Node bal: ${balanceValueSplit} VIVO
-Node value: $${(Number(balanceValueSplit) * Number(lastPriceUsd)).toFixed(2)}`))
+          console.log(colors.magenta(`Node (${myNode.address.substr(0,5)}...) bal: ${balanceValueSplit} VIVO
+Node (${myNode.address.substr(0,5)}...) value: $${(Number(balanceValueSplit) * Number(lastPriceUsd)).toFixed(2)}`))
         })
         const myNodeIndex = _.indexOf(sortedActiveNodes, myNode)
         if (myNode.status !== 'ENABLED') {
