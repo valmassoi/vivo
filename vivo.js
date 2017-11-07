@@ -95,5 +95,6 @@ figlet('VIVO', {font: 'Lean'}, (err, data) => {
     return
   }
   console.log(data)
+  console.log(colors.gray('⭐️ the Repo: https://github.com/valmassoi/vivo by @valmassoi'))
   runRequest()
 })
