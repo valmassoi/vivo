@@ -9,6 +9,7 @@ console.log('MNS:', masterNodes)
 const avgBlockTime = 2 // 2mins
 
 const summaryUrl = 'http://vivo.explorerz.top:3003/ext/summary'
+const addressUrl = 'http://vivo.explorerz.top:3003/address/'
 const masterNodeUrl = `http://vivo.explorerz.top:3003/ext/masternodes?_=${Date.now()}`
 
 const numberWithCommas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -59,6 +60,17 @@ function runRequest() {
       masterNodes.forEach((node) => { // TODO sep func
         const myNode = _.filter(nodes, { 'ip': node })[0] || 'not found'
         console.log('My Node:', myNode)
+        axios.get(addressUrl + myNode.address)
+        .then(res => {
+          const html = res.data
+          const startIndex = html.indexOf('<th>Balance (VIVO)</th>')
+          const totalSentValueIndex = html.indexOf('</td><td>', startIndex)
+          const balanceValueIndex = html.indexOf('</td><td>', totalSentValueIndex + '</td><td>'.length)
+          const balanceValue = html.substr(balanceValueIndex + '</td><td>'.length, 30)
+          const balanceValueSplit = balanceValue.split('</td>')[0]
+          console.log(colors.magenta(`Node bal: ${balanceValueSplit} VIVO
+Node value: $${(Number(balanceValueSplit) * Number(lastPriceUsd)).toFixed(2)}`))
+        })
         const myNodeIndex = _.indexOf(sortedActiveNodes, myNode)
         if (myNode.status !== 'ENABLED') {
           console.log(colors.red(`MY MASTERNODE ${node} IS DOWN!`))
