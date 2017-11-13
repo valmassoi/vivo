@@ -14,17 +14,11 @@ const masterNodeUrl = `http://vivo.explorerz.top:3003/ext/masternodes?_=${Date.n
 
 const numberWithCommas = x => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 
-function getDayAppend(day) {
-  let dayAppend = 'th'
-  if (day.endsWith(1)) {
-    dayAppend = 'st'
-  } else if (day.endsWith(2)) {
-    dayAppend = 'nd'
-  } else if (day.endsWith(3)) {
-    dayAppend = 'rd'
-  }
-  return dayAppend
-}
+function getOrdinalSuffix(n) {
+    const s = ["th", "st", "nd", "rd"]
+    const v = n % 100
+    return n + (s[(v-20)%10] || s[v] || s[0])
+ }
 
 function runRequest() {
   axios.get(summaryUrl)
@@ -85,8 +79,8 @@ Node (${myNode.address.substr(0,5)}...) value: $${(Number(balanceValueSplit) * N
           const centerPoint = (lowerBound + upperBound) / 2
           const centerPointMs = centerPoint * 60000
           const estTime = new Date(Date.now() + centerPointMs)
-          const dayAppend = getDayAppend(estTime.getDate().toString())
-          const dateString = `${estTime.getHours()}:${estTime.getMinutes()} on the ${estTime.getDate()}${dayAppend}`
+          const dayAppended = getOrdinalSuffix(estTime.getDate().toString())
+          const dateString = `${estTime.getHours()}:${estTime.getMinutes()} on the ${dayAppended}`
           console.log(`Payout in ~${lowerBound} - ${upperBound} mins (${(lowerBound / 60).toFixed(2)} - ${(upperBound / 60).toFixed(2)} hrs)`)
           console.log(colors.green(`Est. around: ${dateString}`))
         }
