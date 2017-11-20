@@ -47,7 +47,7 @@ function runRequest() {
     axios.get(masterNodeUrl)
     .then(data => { // TODO async
       const nodes = data.data.data
-      const activeNodes = _.filter(nodes, { 'status': 'ENABLED' })
+      const activeNodes = _.filter(nodes, (n) => ['ENABLED'].includes(n.status) )
       console.log(colors.blue(`Active Nodes: ${masternodeOnlineCount} of Total: ${masternodeCount}`))
       const sortedActiveNodes = _.sortBy(activeNodes, [(o) => Number(o.lastpaid)])
       // console.log(sortedActiveNodes)
